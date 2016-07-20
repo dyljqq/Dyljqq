@@ -9,7 +9,7 @@
 import UIKit
 
 typealias ImageDownloaderProgressBlock = ((receivedSize: Int64, totalSize: Int64) -> ())
-typealias ImageDownloaderCompletionHandler = ((image: UIImage?, error: NSError?, imageURL: NSURL?, originData: NSData?)-> ())
+typealias ImageDownloaderCompletionHandler = ((image: Image?, error: NSError?, imageURL: NSURL?, originData: NSData?)-> ())
 
 private let defaultName = "defaultName"
 private let barrierQueueName = "com.dyljqq.barrier"
@@ -147,7 +147,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
         }
     }
     
-    private func callbackWithImage(image: UIImage?, error: NSError?, imageURL:NSURL, originData: NSData?) {
+    private func callbackWithImage(image: Image?, error: NSError?, imageURL:NSURL, originData: NSData?) {
         if let callbackPairs = self.fetchLoadForKey(imageURL)?.callbackPairs {
             self.cleanForKey(imageURL)
             
@@ -162,7 +162,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
     private func progressImageForTask(task: NSURLSessionTask?, URL: NSURL) {
         
         if let fetchLoad = self.fetchLoads[URL] {
-            if let image = UIImage(data: fetchLoad.responseData) {
+            if let image = Image(data: fetchLoad.responseData) {
                 callbackWithImage(image, error: nil, imageURL: URL, originData: fetchLoad.responseData)
             } else {
                 callbackWithImage(nil, error: NSError(domain: ImageDownloaderFetchErrorDomain, code: ImageDownloaderFetchError.BadData.rawValue, userInfo: nil), imageURL: URL, originData: nil)

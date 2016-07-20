@@ -16,21 +16,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-//        ImageDownloader.defaultDownloader.downloadImageForURL(NSURL(string: "https://raw.githubusercontent.com/onevcat/Kingfisher/master/images/kingfisher-1.jpg")!, progressBlock: { receivedSize, totalSize in
-//            print("receivedSize: \(receivedSize), totalSize: \(totalSize)")
-//            }, completionHandler: { image, error, imageURL, originData in
-//                if let image = image {
-//                    self.imageView.image = image
-//                }
-//        })
-        
-        ImageManager.sharedManager.downloadImage(NSURL(string: "https://raw.githubusercontent.com/onevcat/Kingfisher/master/images/kingfisher-1.jpg")!, progressBlock: { receivedSize, totalSize in
-            print("receivedSize: \(receivedSize), totalSize: \(totalSize)")
-            }, completionHandler: { image, error in
-                if let image = image {
-                    self.imageView.image = image
-                }
-        })
+        imageView.dj_showIndicatorWhenLoading = true
+        imageView.setImageWithURL(NSURL(string: "https://raw.githubusercontent.com/onevcat/Kingfisher/master/images/kingfisher-3.jpg")!);
         
     }
 

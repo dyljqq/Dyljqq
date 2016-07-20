@@ -9,7 +9,7 @@
 import UIKit
 
 typealias ProgressBlock = (receivedSize: Int64, totalSize: Int64)-> ()
-typealias CompletionHandler = (image: UIImage?, error: NSError?)-> ()
+typealias CompletionHandler = (image: Image?, error: NSError?)-> ()
 
 private let instance = ImageManager()
 
@@ -24,7 +24,7 @@ public class ImageManager {
 // MARK: - Download method
 extension ImageManager {
     
-    func downloadImage(URL: NSURL, placeHoldImage: UIImage? = nil, progressBlock: ProgressBlock?, completionHandler: CompletionHandler?) {
+    func downloadImage(URL: NSURL, placeHoldImage: Image? = nil, progressBlock: ProgressBlock?, completionHandler: CompletionHandler?) {
         
         if ImageCache.defaultCache.isExsitForKey(URL.absoluteString) {
             ImageCache.defaultCache.retrieveImage(URL.absoluteString) { image, cacheType in

@@ -52,7 +52,7 @@ public class ImageCache {
 // MARK: Store & Remove
 extension ImageCache {
     
-    func storeImage(image: UIImage, originData: NSData? = nil, forKey key: String, toDisk: Bool = true, completionHandler: (()-> ())? = nil) {
+    func storeImage(image: Image, originData: NSData? = nil, forKey key: String, toDisk: Bool = true, completionHandler: (()-> ())? = nil) {
         memoryCache.setObject(image, forKey: key, cost: image.dj_imageCost)
         
         func callHandlerInMainQueue() {
@@ -109,7 +109,7 @@ extension ImageCache {
 // MARK: - Retrieve image
 extension ImageCache {
     
-    func retrieveImage(key: String, completionHandler: ((UIImage?, CacheType)-> Void)) {
+    func retrieveImage(key: String, completionHandler: ((Image?, CacheType)-> Void)) {
         if let image = retrieveImageFromCacheForKey(key) {
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(image, .MemoryCache)
@@ -126,19 +126,19 @@ extension ImageCache {
         }
     }
     
-    func retrieveImageFromDisk(key: String)-> UIImage? {
+    func retrieveImageFromDisk(key: String)-> Image? {
         return diskImageForKey(key)
     }
     
-    func diskImageForKey(key: String)-> UIImage? {
+    func diskImageForKey(key: String)-> Image? {
         if let data = diskImageDataForKey(key) {
-            return UIImage(data: data)
+            return Image(data: data)
         }
         return nil
     }
     
-    func retrieveImageFromCacheForKey(key: String)-> UIImage? {
-        return memoryCache.objectForKey(key) as? UIImage
+    func retrieveImageFromCacheForKey(key: String)-> Image? {
+        return memoryCache.objectForKey(key) as? Image
     }
     
     func isExsitForKey(key: String)-> Bool {
@@ -174,7 +174,7 @@ extension ImageCache {
 }
 
 // MARK: Image
-extension UIImage {
+extension Image {
     var dj_imageCost: Int {
         return Int(size.height * size.width * scale * scale)
     }
